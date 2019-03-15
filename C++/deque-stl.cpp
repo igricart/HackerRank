@@ -29,7 +29,7 @@ void printKMax(int arr[], int n, int k){
     }
     element = dq.size();
 
-    //Print max
+    //Loop through array
     if(loops != 0){
         cout << max << " ";
     }else {
@@ -65,6 +65,7 @@ int main(){
     	cin >> n >> k;
     	int i;
     	int arr[n];
+        // Added braces
     	for(i=0;i<n;i++){
       		cin >> arr[i];
         }
