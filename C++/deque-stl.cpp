@@ -20,7 +20,7 @@ void printKMax(int arr[], int n, int k){
     int max = 0;
     deque<int> dq;
 
-    //Initialize duque
+    //Initialize deque
     for(int i = 0; i < k; ++i){
         dq.push_back(arr[i]);
         if(arr[i] > max){
