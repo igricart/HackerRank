@@ -24,27 +24,18 @@ void matrixRotation(vector<vector<int>> matrix, int r) {
             for(i = column - ring; i >= 1 + ring; --i){
                 cp_matrix[ring][i - 1] = matrix[ring][i];
             }
-            cout << endl;
             // Left column iteration
             for(i = ring; i < row - ring; ++i){
                 cp_matrix[i + 1][ring] = matrix[i][ring];
             }
-            cout << endl;
             // Down row iteration
             for (i = ring; i <= column - ring; ++i){
                 cp_matrix[row - ring][i + 1] = matrix[row - ring][i];
             }
-            cout << endl;
             // Right column iteration
-            //for (i = column - ring; i >= 1 + ring; --i){
-            //    cp_matrix[i][column - ring] = matrix[i+1][column - ring];
-            //}
-            for (i = ring; i <= row - ring; ++i){
+            for (i = ring; i < row - ring; ++i){
                 cp_matrix[i][column - ring] = matrix[i + 1][column - ring];
-                cout << cp_matrix[i][column - ring] << endl;
             }
-            //cp_matrix[ring][column - ring] = matrix[ring + 1][column - ring];
-            cout << endl;
         }
         // Update matrix
         matrix = cp_matrix;
