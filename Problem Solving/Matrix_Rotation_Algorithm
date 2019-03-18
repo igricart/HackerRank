@@ -1,0 +1,133 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+vector<string> split(const string &);
+
+// Complete the matrixRotation function below.
+void matrixRotation(vector<vector<int>> matrix, int r) {
+    vector<vector<int>> cp_matrix;
+    vector<int> aux;
+    int row,column, n_rings;
+    cp_matrix = matrix;
+    row = matrix.size() - 1;
+    column = matrix[0].size() - 1;
+    n_rings = min(row + 1,column + 1)/2;
+    int i = column;
+    // Iterations
+    for(int n = 0; n < r; ++n){
+        // Ring iteration
+        for(int ring = 0; ring < n_rings; ++ring){
+            //Upper row iteration
+            for(i = column - ring; i >= 1 + ring; --i){
+                cp_matrix[ring][i - 1] = matrix[ring][i];
+            }
+            cout << endl;
+            // Left column iteration
+            for(i = ring; i < row - ring; ++i){
+                cp_matrix[i + 1][ring] = matrix[i][ring];
+            }
+            cout << endl;
+            // Down row iteration
+            for (i = ring; i <= column - ring; ++i){
+                cp_matrix[row - ring][i + 1] = matrix[row - ring][i];
+            }
+            cout << endl;
+            // Right column iteration
+            //for (i = column - ring; i >= 1 + ring; --i){
+            //    cp_matrix[i][column - ring] = matrix[i+1][column - ring];
+            //}
+            for (i = ring; i <= row - ring; ++i){
+                cp_matrix[i][column - ring] = matrix[i + 1][column - ring];
+                cout << cp_matrix[i][column - ring] << endl;
+            }
+            //cp_matrix[ring][column - ring] = matrix[ring + 1][column - ring];
+            cout << endl;
+        }
+        // Update matrix
+        matrix = cp_matrix;
+    }
+    // Print routine
+    for (int i = 0; i <= row; ++i){
+        for(int j = 0; j <= column; ++j){
+            cout << cp_matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main()
+{
+    string mnr_temp;
+    getline(cin, mnr_temp);
+
+    vector<string> mnr = split(rtrim(mnr_temp));
+
+    int m = stoi(mnr[0]);
+
+    int n = stoi(mnr[1]);
+
+    int r = stoi(mnr[2]);
+
+    vector<vector<int>> matrix(m);
+
+    for (int i = 0; i < m; i++) {
+        matrix[i].resize(n);
+
+        string matrix_row_temp_temp;
+        getline(cin, matrix_row_temp_temp);
+
+        vector<string> matrix_row_temp = split(rtrim(matrix_row_temp_temp));
+
+        for (int j = 0; j < n; j++) {
+            int matrix_row_item = stoi(matrix_row_temp[j]);
+
+            matrix[i][j] = matrix_row_item;
+        }
+    }
+
+    matrixRotation(matrix, r);
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
+
+vector<string> split(const string &str) {
+    vector<string> tokens;
+
+    string::size_type start = 0;
+    string::size_type end = 0;
+
+    while ((end = str.find(" ", start)) != string::npos) {
+        tokens.push_back(str.substr(start, end - start));
+
+        start = end + 1;
+    }
+
+    tokens.push_back(str.substr(start));
+
+    return tokens;
+}
