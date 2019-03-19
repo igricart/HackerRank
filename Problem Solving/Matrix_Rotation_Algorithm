@@ -9,31 +9,38 @@ vector<string> split(const string &);
 // Complete the matrixRotation function below.
 void matrixRotation(vector<vector<int>> matrix, int r) {
     vector<vector<int>> cp_matrix;
-    vector<int> aux;
+    int* arr;
     int row,column, n_rings;
     cp_matrix = matrix;
     row = matrix.size() - 1;
     column = matrix[0].size() - 1;
     n_rings = min(row + 1,column + 1)/2;
     int i = column;
+    /*
+    int loop_type = max(row, column);
+    // Row_type == 1 && column_type == 1 => Square matrix
+    int row_type = 0;
+    int column_type = 0;
+
+    if(loop_type == row)
+        row_type = 1;
+    if(loop_type == column)
+        column_type = 1;
+    */
     // Iterations
     for(int n = 0; n < r; ++n){
         // Ring iteration
         for(int ring = 0; ring < n_rings; ++ring){
-            //Upper row iteration
-            for(i = column - ring; i >= 1 + ring; --i){
-                cp_matrix[ring][i - 1] = matrix[ring][i];
-            }
-            // Left column iteration
-            for(i = ring; i < row - ring; ++i){
-                cp_matrix[i + 1][ring] = matrix[i][ring];
-            }
-            // Down row iteration
-            for (i = ring; i <= column - ring; ++i){
+            for(i = ring; i < column -ring; ++i){
+                // Upper row iteration
+                cp_matrix[ring][i] = matrix[ring][i+1];
+                // Down row iteration
                 cp_matrix[row - ring][i + 1] = matrix[row - ring][i];
             }
-            // Right column iteration
-            for (i = ring; i < row - ring; ++i){
+            for(i = ring; i < row - ring; ++i){
+                // Left column iteration
+                cp_matrix[i + 1][ring] = matrix[i][ring];
+                // Right column iteration
                 cp_matrix[i][column - ring] = matrix[i + 1][column - ring];
             }
         }
